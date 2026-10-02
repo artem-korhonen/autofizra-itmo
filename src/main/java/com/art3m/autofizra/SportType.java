@@ -24,4 +24,14 @@ public enum SportType {
     public int getId() {
         return id;
     }
+
+    public static SportType getSportById(int id) {
+        for (SportType sport : SportType.values()) {
+            if (sport.getId() == id) {
+                return sport;
+            }
+        }
+
+        return null;
+    }
 }
