@@ -10,9 +10,9 @@ public enum SportType {
     FITNESS("Фитнес", 39);
 
     private final String name;
-    private final int id;
+    private final long id;
 
-    SportType(String name, int id) {
+    SportType(String name, long id) {
         this.name = name;
         this.id = id;
     }
@@ -21,11 +21,11 @@ public enum SportType {
         return name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public static SportType getSportById(int id) {
+    public static SportType getSportById(long id) {
         for (SportType sport : SportType.values()) {
             if (sport.getId() == id) {
                 return sport;

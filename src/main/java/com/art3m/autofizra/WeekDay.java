@@ -1,6 +1,6 @@
 package com.art3m.autofizra;
 
-public enum DayOfWeek {
+public enum WeekDay {
     MONDAY("Понедельник"),
     TUESDAY("Вторник"),
     WEDNESDAY("Среда"),
@@ -11,7 +11,7 @@ public enum DayOfWeek {
 
     private String name;
 
-    DayOfWeek(String name) {
+    WeekDay(String name) {
         this.name = name;
     }
 

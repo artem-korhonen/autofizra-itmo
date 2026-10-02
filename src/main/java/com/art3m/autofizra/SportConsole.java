@@ -56,7 +56,7 @@ public class SportConsole {
             LocalDate date = sportSchedule.getDate();
             counter += 1;
 
-            DayOfWeek dayOfWeek = DayOfWeek.valueOf(date.getDayOfWeek().name());
+            WeekDay dayOfWeek = WeekDay.valueOf(date.getDayOfWeek().name());
 
             System.out.println(date.toString() + " " + dayOfWeek.getName() + " (" + counter.toString() + ")");
         }
