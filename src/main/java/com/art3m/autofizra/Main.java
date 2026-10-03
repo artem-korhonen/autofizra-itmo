@@ -1,38 +1,27 @@
 package com.art3m.autofizra;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
 
-import api.myitmo.MyItmo;
-import api.myitmo.MyItmoApi;
-import api.myitmo.model.sport.SportLesson;
-import api.myitmo.model.sport.SportSchedule;
+import com.art3m.autofizra.gui.AppWindow;
+import com.art3m.autofizra.gui.LoginPanel;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
 
 public class Main {
-    
+    public static void main(String[] args) throws IOException {
+        Terminal terminal = new DefaultTerminalFactory().createTerminal();
+        Screen screen = new TerminalScreen(terminal);
+        screen.startScreen();
 
-    public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        MyItmo myItmo = AuthService.auth(scanner);
-        MyItmoApi api = myItmo.getApi();
+        MultiWindowTextGUI gui = new MultiWindowTextGUI(screen);
 
-        try {
-            SportConsole sportConsole = new SportConsole(scanner);
-            SportService sportService = new SportService(api);
+        AppWindow app = new AppWindow(gui);
+        app.setScreen(new LoginPanel(app));
+        gui.addWindowAndWait(app);
 
-            Long sportId = sportConsole.selectSport();
-            List<SportSchedule> sportSchedules = sportService.getSportSchedules(sportId);
-            List<SportLesson> sportLessons = sportConsole.selectSportLessons(sportSchedules);
-            SportLesson sportLesson = sportConsole.selectSportLesson(sportLessons);
-
-            if (sportLesson != null) {
-                sportService.waitAndSignIn(sportId, sportLesson.getId());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            scanner.close();
-        }
+        screen.stopScreen();
     }
 }

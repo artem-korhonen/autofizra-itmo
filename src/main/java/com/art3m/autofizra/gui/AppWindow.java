@@ -3,6 +3,7 @@ package com.art3m.autofizra.gui;
 import java.util.Arrays;
 import java.util.List;
 
+import com.art3m.autofizra.AutoSignUp;
 import com.art3m.autofizra.SportType;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Component;
@@ -21,12 +22,16 @@ public class AppWindow extends BasicWindow {
     private List<SportSchedule> sportSchedules;
     private List<SportLesson> sportLessons;
     private SportLesson sportLesson;
+
+    private AutoSignUp autoSignUp;
     
     public AppWindow(MultiWindowTextGUI gui) {
         super("autofizra");
         this.gui = gui;
 
         setHints(Arrays.asList(Window.Hint.CENTERED));
+
+        this.autoSignUp = new AutoSignUp();
     }
 
     public void updateTitle(String title) {
@@ -47,6 +52,7 @@ public class AppWindow extends BasicWindow {
 
     public void setApi(MyItmoApi api) {
         this.api = api;
+        this.autoSignUp.setApi(api);
     }
 
     public SportType getSportType() {
@@ -81,4 +87,11 @@ public class AppWindow extends BasicWindow {
         this.sportLesson = sportLesson;
     }
 
+    public AutoSignUp getAutoSignUp() {
+        return this.autoSignUp;
+    }
+
+    public void setAutoSignUp(AutoSignUp autoSignUp) {
+        this.autoSignUp = autoSignUp;
+    }
 }

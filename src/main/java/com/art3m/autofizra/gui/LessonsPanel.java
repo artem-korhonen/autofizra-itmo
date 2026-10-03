@@ -30,6 +30,10 @@ public class LessonsPanel extends Panel {
                 if (intersection) {
                     sign = "[<->] ";
                 }
+
+                if (app.getAutoSignUp().getSportLessons().contains(sportLesson)) {
+                    sign = "[B] ";
+                }
             } else {
                 List<String> unavailableReasons = sportLesson.getCanSignIn().getUnavailableReasons();
                 if (unavailableReasons != null

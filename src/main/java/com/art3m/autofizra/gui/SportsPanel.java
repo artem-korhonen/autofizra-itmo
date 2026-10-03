@@ -18,9 +18,8 @@ public class SportsPanel extends Panel {
 
         for (SportType sport : SportType.values()) {
             Button button = new Button(sport.getName(), () -> {
-                SportService sportService = new SportService(app.getApi());
                 try {
-                    List<SportSchedule> sportSchedules = sportService.getSportSchedules(sport.getId());
+                    List<SportSchedule> sportSchedules = SportService.getSportSchedules(app.getApi(), sport.getId());
 
                     app.setSportSchedules(sportSchedules);
                     app.setScreen(new SchedulePanel(app));
@@ -35,6 +34,7 @@ public class SportsPanel extends Panel {
 
         Button backButton = new Button("Назад", () -> {
             app.setScreen(new LoginPanel(app));
+            app.getAutoSignUp().clearSportLessons();
         });
 
         addComponent(new EmptySpace());
