@@ -14,7 +14,7 @@ import api.myitmo.model.sport.SportSchedule;
 
 public class SchedulePanel extends Panel {
     public SchedulePanel(AppWindow app) {
-        app.updateTitle("Расписание");
+        app.updateTitle("Расписание - " + app.getSportType().getName());
 
         for (SportSchedule sportSchedule: app.getSportSchedules()) {
             LocalDate date = sportSchedule.getDate();
@@ -26,6 +26,7 @@ public class SchedulePanel extends Panel {
                 if (sportLessons == null || sportLessons.size() == 0) {
                     MessageDialog.showMessageDialog(app.getGui(), "Ошибка", "Занятий в этот день не найдено");
                 } else {
+                    app.setDate(date);
                     app.setSportLessons(sportLessons);
                     app.setScreen(new LessonsPanel(app));
                 }

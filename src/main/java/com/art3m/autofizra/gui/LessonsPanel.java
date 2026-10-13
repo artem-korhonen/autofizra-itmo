@@ -12,7 +12,7 @@ import api.myitmo.model.sport.SportLesson;
 
 public class LessonsPanel extends Panel {
     public LessonsPanel(AppWindow app) {
-        app.updateTitle("Занятия");
+        app.updateTitle("Занятия - " + app.getSportType().getName());
 
         for (SportLesson sportLesson: app.getSportLessons()) {
             CanSignIn canSignIn = sportLesson.getCanSignIn();
@@ -28,19 +28,19 @@ public class LessonsPanel extends Panel {
 
             if (isCanSignIn) {
                 if (intersection) {
-                    sign = "[<->] ";
+                    sign = "↔ ";
                 }
 
                 if (app.getAutoSignUp().getSportLessons().contains(sportLesson)) {
-                    sign = "[B] ";
+                    sign = "★ ";
                 }
             } else {
                 List<String> unavailableReasons = sportLesson.getCanSignIn().getUnavailableReasons();
                 if (unavailableReasons != null
                         && unavailableReasons.contains("Вы уже записаны на это занятие")) {
-                    sign = "[V] ";
+                    sign = "✓ ";
                 } else {
-                    sign = "[X] ";
+                    sign = "✗ ";
                 }
             }
 

@@ -12,8 +12,11 @@ public class AutoSignUp {
     private List<SportLesson> sportLessons = new CopyOnWriteArrayList<SportLesson>();
     private MyItmoApi api;
     private Thread worker;
+    private Runnable onUpdate;
 
-    public AutoSignUp() {
+    public AutoSignUp(Runnable onUpdate) {
+        this.onUpdate = onUpdate;
+        
         this.worker = new Thread(this::loop);
         this.worker.setDaemon(true);
         this.worker.start();
@@ -40,9 +43,11 @@ public class AutoSignUp {
     }
 
     private void autoRemoveSportLessons(List<Long> sportLessonsIds) {
-        sportLessons.removeIf(sl -> sportLessonsIds.contains(sl.getId()));
+        boolean changed = sportLessons.removeIf(sl -> sportLessonsIds.contains(sl.getId()));
 
-        // тут типо обновление будет, чтобы инфа обновлялась только тогда, когда что-то изменилось
+        if (changed && onUpdate != null) {
+            onUpdate.run();
+        }
     }
 
     public void clearSportLessons() {
@@ -61,11 +66,9 @@ public class AutoSignUp {
                 List<Long> sportLessonsIds = this.sportLessons.stream().map(SportLesson::getId).toList();
                 ResultResponse<List<Long>> response = this.api.signInLessons(sportLessonsIds).execute().body();
 
-                System.err.println("a");
                 if (response != null && response.getResult() != null) {
                     List<Long> result = response.getResult();
                     autoRemoveSportLessons(result);
-                    System.err.println("b");
                 }
 
                 Thread.sleep(1000);
@@ -91,5 +94,13 @@ public class AutoSignUp {
 
     public void setWorker(Thread worker) {
         this.worker = worker;
+    }
+
+    public Runnable getOnUpdate() {
+        return this.onUpdate;
+    }
+
+    public void setOnUpdate(Runnable onUpdate) {
+        this.onUpdate = onUpdate;
     }
 }

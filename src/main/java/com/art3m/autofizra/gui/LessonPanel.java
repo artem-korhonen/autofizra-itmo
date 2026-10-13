@@ -15,7 +15,7 @@ public class LessonPanel extends Panel {
     public LessonPanel(AppWindow app) {
         super(new GridLayout(2));
 
-        app.updateTitle("Занятие");
+        app.updateTitle("Занятие - " + app.getSportType().getName());
         GridLayout layout = (GridLayout) getLayoutManager();
         layout.setHorizontalSpacing(3);
         layout.setVerticalSpacing(1);
@@ -55,7 +55,7 @@ public class LessonPanel extends Panel {
         );
 
         Button backButton = new Button("Назад", () -> {
-            app.setComponent(new LessonsPanel(app));
+            app.setScreen(new LessonsPanel(app));
         });
         
         addComponent(new EmptySpace());
